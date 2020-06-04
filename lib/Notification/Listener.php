@@ -126,6 +126,9 @@ class Listener {
 				]);
 		} catch (\InvalidArgumentException $e) {
 			$this->logger->logException($e, ['app' => 'spreed']);
+			if ($shouldFlush) {
+				$this->notificationManager->flush();
+			}
 			return;
 		}
 
@@ -223,6 +226,9 @@ class Listener {
 				->setDateTime($dateTime);
 		} catch (\InvalidArgumentException $e) {
 			$this->logger->logException($e, ['app' => 'spreed']);
+			if ($shouldFlush) {
+				$this->notificationManager->flush();
+			}
 			return;
 		}
 
