@@ -298,8 +298,9 @@ Peer.prototype._observeDataChannel = function(channel) {
 	}
 	channel.onopen = function() {
 		self.emit('channelOpen', channel)
+		const dc = self.getDataChannel(channel)
 		// Check if there are messages that could not be send
-		if (self.pendingDCMessages.hasOwnProperty(channel.label)) {
+		if (dc.readyState === 'open' && self.pendingDCMessages.hasOwnProperty(channel.label)) {
 			const pendingMessages = self.pendingDCMessages[channel.label]
 			for (let i = 0; i < pendingMessages.length; i++) {
 				self.sendDirectly(channel.label, pendingMessages[i].type, pendingMessages[i].payload)
